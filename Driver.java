@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Driver { 
-	public static void main(String [] args) throws IOException	{ 
+	public static void main(String [] args) { 
 		Polynomial p = new Polynomial(); 
 		System.out.println(p.evaluate(3)); 
 		double [] c1 = {2,1};

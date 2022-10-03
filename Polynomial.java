@@ -156,20 +156,27 @@ public class Polynomial {
 		return soln;
 	}
 	
-	public void saveToFile(String fileName) throws IOException {
-		FileWriter writer = new FileWriter(fileName);
-		for(int i = 0; i < coeffs.length; i++)
-		{
-			if(i > 0 && coeffs[i] > 0)
-				writer.write("+");
-			writer.write((int)coeffs[i] + "");
-			if(i > 0) {
-				writer.write("x");
-				writer.write(expos[i] + "");
+	public void saveToFile(String fileName) {
+		FileWriter writer;
+		try {
+			writer = new FileWriter(fileName);
+	
+			for(int i = 0; i < coeffs.length; i++)
+			{
+				if(i > 0 && coeffs[i] > 0)
+					writer.write("+");
+				writer.write((int)coeffs[i] + "");
+				if(i > 0) {
+					writer.write("x");
+					writer.write(expos[i] + "");
+				}
 			}
+			writer.write("\n");
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		writer.write("\n");
-		writer.close();
 	}
 
 }
