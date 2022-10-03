@@ -19,12 +19,9 @@ public class Driver {
 			System.out.println("1 is not a root of s");
 		Polynomial multi = p1.multiply(p2);
 		System.out.println("multi(2) = " + multi.evaluate(2));
-		File f = new File("/Users/tamammakki/eclipse-workspace/b07 
-lab 1/src/polex");
+		File f = new File("/Users/tamammakki/eclipse-workspace/b07 lab 1/src/polex");
 		Polynomial test = new Polynomial(f);
 		System.out.println(test.evaluate(1));
-		p1.saveToFile("/Users/tamammakki/eclipse-workspace/b07 lab 
-1/src/test");
+		p1.saveToFile("/Users/tamammakki/eclipse-workspace/b07 lab 1/src/test");
 		}
 	} 
-

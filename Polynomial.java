@@ -27,8 +27,7 @@ public class Polynomial {
 	public Polynomial(File polFile) {
 		BufferedReader reader;
 		try {
-			reader = new BufferedReader(new 
-FileReader(polFile));
+			reader = new BufferedReader(new FileReader(polFile));
 			String line = reader.readLine();
 			int length = line.length();
 			double [] cos = new double[length];
@@ -37,8 +36,7 @@ FileReader(polFile));
 			int i = 0, j = 0;
 			for(char s: line.toCharArray()) {
 				if(isExp) {//if last character was x
-					exp[j] = 
-Integer.parseInt(Character.toString(s));
+					exp[j] = Integer.parseInt(Character.toString(s));
 					j++;
 					isExp = false;
 				}
@@ -53,8 +51,7 @@ Integer.parseInt(Character.toString(s));
 					continue;
 				}
 				else {
-					double num = 
-Double.parseDouble(Character.toString(s));
+					double num = Double.parseDouble(Character.toString(s));
 					if(isNeg) {
 						num = -1*num;
 						isNeg = false;
@@ -176,4 +173,3 @@ Double.parseDouble(Character.toString(s));
 	}
 
 }
-
