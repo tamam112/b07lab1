@@ -26,8 +26,10 @@ public class Polynomial{
             longerLen = this.coeffs.length;
             shorterLen = poly.coeffs.length;
         }
-        longerLen = poly.coeffs.length;
-        shorterLen = this.coeffs.length;
+        else{
+            longerLen = poly.coeffs.length;
+            shorterLen = this.coeffs.length;
+        }
 
         double[] sum = new double[longerLen];
         int j;
