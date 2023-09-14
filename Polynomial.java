@@ -42,9 +42,11 @@ public class Polynomial{
                 j++;
             }
         }
-        while(j < longerLen){
-            sum[j] = poly.coeffs[j];
-            j++;
+        else {
+            while(j < longerLen){
+                sum[j] = poly.coeffs[j];
+                j++;
+            }
         }
         Polynomial soln = new Polynomial(sum);
         return soln;
