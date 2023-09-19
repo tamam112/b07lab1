@@ -1,6 +1,7 @@
 import java.lang.Math;
 
-public class Polynomial{
+public class Polynomial {
+
     double[] coeffs;
 
     public Polynomial(){
@@ -8,60 +9,45 @@ public class Polynomial{
         coeffs[0] = 0;
     }
 
-    public Polynomial(double[] input){
-        int len = input.length;
-        coeffs = new double[len];
-        for (int i = 0; i < len; i++){
-            coeffs[i] = input[i];
+    public Polynomial(double[] cos){
+        coeffs = new double[cos.length];
+        for (int i = 0; i < cos.length; i++){
+            coeffs[i] = cos[i];
         }
-
     }
 
     public Polynomial add(Polynomial poly){
-        //need to consider 2 cases: same length polynomials, diff size polynomials
-        int longerLen;
-        int shorterLen;
+        int longer = Math.max(coeffs.length, poly.coeffs.length);
+        int shorter = Math.min(coeffs.length, poly.coeffs.length);
+        double[] sum = new double[longer];
+        int i;
 
-        if (this.coeffs.length > poly.coeffs.length){
-            longerLen = this.coeffs.length;
-            shorterLen = poly.coeffs.length;
+        for (i = 0; i < shorter; i++){
+            sum[i] = coeffs[i] + poly.coeffs[i];
+        }
+        if (coeffs.length > poly.coeffs.length) {
+            for (int j = i; j < sum.length; j++) {
+                sum[j] = coeffs[j];
+            }
         }
         else{
-            longerLen = poly.coeffs.length;
-            shorterLen = this.coeffs.length;
-        }
-
-        double[] sum = new double[longerLen];
-        int j;
-        for (j = 0; j < shorterLen; j++){
-            sum[j] = coeffs[j] + poly.coeffs[j];
-        }
-        if (j == poly.coeffs.length){
-            while(j < longerLen){
-                sum[j] = coeffs[j];
-                j++;
-            }
-        }
-        else {
-            while(j < longerLen){
+            for(int j = i; j < sum.length; j++){
                 sum[j] = poly.coeffs[j];
-                j++;
             }
         }
-        Polynomial soln = new Polynomial(sum);
-        return soln;
+        return new Polynomial(sum);
     }
 
-    public double evaluate(double num){
-        double soln = coeffs[0];
-        for(int j = 1; j < coeffs.length; j++){
-            soln += coeffs[j]*Math.pow(num, j);
+    public double evaluate(double x){
+        //need to multiply each element in the array based on its exponent
+        double eval = coeffs[0];
+        for(int i = 1; i < coeffs.length; i++){
+            eval += coeffs[i]*Math.pow(x, i);
         }
-        return soln;
+        return eval;
     }
 
-    public boolean hasRoot(double isRoot){
-        return evaluate(isRoot) == 0;
+    public boolean hasRoot(double x){
+        return evaluate(x) == 0;
     }
-
 }
