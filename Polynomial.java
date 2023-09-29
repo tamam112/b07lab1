@@ -86,54 +86,45 @@ public class Polynomial {
             }
         }
 
-        double[] prodCoeffs = new double[k];
-        int[] prodExpons = new int[k];
+        //collect like terms
+        double[] finalCoeffs = new double[multiCoeffs.length];
+        int[] finalExpons = new int[multiExpons.length];
+        int curr = 0;
 
-        for(int i = 0; multiCoeffs[i] != 0 && i < k; i++){
-            //if(multiExpons[i] == )
-            prodCoeffs[i] = multiCoeffs[i];
-            prodExpons[i] = multiExpons[i];
-        }
-
-/**
-        double[] finalCoeffs = new double[prodCoeffs.length];
-        int[] finalExpons = new int[prodExpons.length];
-        int counter = 0;
-
-        for(int i = 0; i < prodCoeffs.length; i++){
-            double coeffCount = prodCoeffs[i];
-            int exponCount = prodExpons[i];
+        for(int i = 0; i < multiCoeffs.length; i++){
+            double coeffCount = multiCoeffs[i];
+            int exponCount = multiExpons[i];
             boolean srch = false;
 
-            for(int j = 0; j < counter; j++){
-                if(finalExpons[j] == coeffCount){
+            for(int j = 0; j < curr; j++){
+                if(finalExpons[j] == exponCount){
                     finalCoeffs[j] += coeffCount;
                     srch = true;
                     break;
                 }
             }
-
             if(srch == false){
-                finalCoeffs[counter] = coeffCount;
-                finalExpons[counter] = exponCount;
-                counter++;
+                finalCoeffs[curr] = coeffCount;
+                finalExpons[curr] = exponCount;
+                curr++;
             }
         }
-*/
 
- /**
-        //remove 0s from prodExpons and group together like terms
-        //could make nested array--> [exp, coeff] and look for same exp, add coeffs
+        //count number of redundant exponents
         int counter = 0;
-        for(int i = 0; i < prodExpons.length; i++){
-            if(prodExpons[i] != 0){
+        for(int i = 0; i < finalCoeffs.length; i++){
+            if(finalExpons[i] == 0){
                 counter++;
             }
         }
-        //System.out.println(counter);
-*/
 
-
+        //remove redundant exponents
+        double[] prodCoeffs = new double[finalCoeffs.length - counter]; //finalCoeffs-counter
+        int[] prodExpons = new int[finalCoeffs.length - counter];
+        for(int i = 0; finalCoeffs[i] != 0 && i < (finalCoeffs.length - counter); i++){
+            prodCoeffs[i] = finalCoeffs[i];
+            prodExpons[i] = finalExpons[i];
+         }
 
         return new Polynomial(prodCoeffs, prodExpons);
     }
