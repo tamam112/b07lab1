@@ -22,6 +22,10 @@ public class Polynomial {
         }
     }
 
+    public Polynomial(File file){
+
+    }
+
     public Polynomial add(Polynomial poly){//method updated for lab2
         int longer = Math.max(coeffs.length, poly.coeffs.length);
         int shorter = Math.min(coeffs.length, poly.coeffs.length);
@@ -43,18 +47,6 @@ public class Polynomial {
                 sumExpons[j] = poly.expons[j];
             }
         }
-        /**
-        if (coeffs.length > poly.coeffs.length) {
-            for (int j = i; j < sum.length; j++) {
-                sum[j] = coeffs[j];
-            }
-        }
-        else{
-            for(int j = i; j < sum.length; j++){
-                sum[j] = poly.coeffs[j];
-            }
-        }
-         */
         return new Polynomial(sumCoeffs, sumExpons);
     }
 
@@ -92,20 +84,18 @@ public class Polynomial {
         int curr = 0;
 
         for(int i = 0; i < multiCoeffs.length; i++){
-            double coeffCount = multiCoeffs[i];
-            int exponCount = multiExpons[i];
             boolean srch = false;
 
             for(int j = 0; j < curr; j++){
-                if(finalExpons[j] == exponCount){
-                    finalCoeffs[j] += coeffCount;
+                if(finalExpons[j] == multiExpons[i]){//if matching expon is found, add the coeffs
+                    finalCoeffs[j] += multiCoeffs[i];
                     srch = true;
                     break;
                 }
             }
-            if(srch == false){
-                finalCoeffs[curr] = coeffCount;
-                finalExpons[curr] = exponCount;
+            if(srch == false){//if no matches, add expon and coeff to respective arrays
+                finalCoeffs[curr] = multiCoeffs[i];
+                finalExpons[curr] = multiExpons[i];
                 curr++;
             }
         }
