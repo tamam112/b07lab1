@@ -7,13 +7,13 @@ public class Driver {
         System.out.println(p.evaluate(3)); //should evaulate to 0.0
 
         //create Polynomial 1
-        double [] c1 = {6,0,0,5};
-        int [] e1 = {0,1,2,3};
+        double [] c1 = {1,-2,-9};//{6,0,0,5};
+        int [] e1 = {0,1,4};//{0,1,2,3};
         Polynomial p1 = new Polynomial(c1, e1);
 
         //create Polynomial 2
-        double [] c2 = {1,-2,0,0,-9};
-        int [] e2 = {0,1,2,3,4};
+        double [] c2 = {6,4,6,5,3};//{0,-2,0,0,-9};
+        int [] e2 = {0,2,2,3,2};//{0,1,2,3,5};
         Polynomial p2 = new Polynomial(c2, e2);
 
         //test add

@@ -21,10 +21,11 @@ public class Polynomial {
             expons[i] = exps[i];
         }
     }
-
+/**
     public Polynomial(File file){
 
     }
+ */
 
     public Polynomial add(Polynomial poly){//method updated for lab2
         int longer = Math.max(coeffs.length, poly.coeffs.length);
@@ -68,7 +69,7 @@ public class Polynomial {
         int[] multiExpons = new int[poly.coeffs.length*coeffs.length];
         int k = 0;//counts num of terms (expanded form), remaining values in arrays are filled by default double value
 
-        for(int i = 0; i < coeffs.length; i++){
+        for(int i = 0; i < coeffs.length; i++){//initial multiplication in expanded form
             for(int j = 0; j < poly.coeffs.length; j++){
                 if(coeffs[i]*poly.coeffs[j] != 0){
                     multiCoeffs[k] = coeffs[i]*poly.coeffs[j];
@@ -100,22 +101,24 @@ public class Polynomial {
             }
         }
 
-        //count number of redundant exponents
+        //count number of nonzero coeffs to find needed length of prodCoeffs[] and prodExpons[]
         int counter = 0;
         for(int i = 0; i < finalCoeffs.length; i++){
-            if(finalExpons[i] == 0){
+            if(finalCoeffs[i] != 0){
                 counter++;
             }
         }
+        //System.out.println("The value of counter:" + counter);
 
         //remove redundant exponents
-        double[] prodCoeffs = new double[finalCoeffs.length - counter]; //finalCoeffs-counter
-        int[] prodExpons = new int[finalCoeffs.length - counter];
-        for(int i = 0; finalCoeffs[i] != 0 && i < (finalCoeffs.length - counter); i++){
+        double[] prodCoeffs = new double[counter];
+        int[] prodExpons = new int[counter];
+        for(int i = 0; finalCoeffs[i] != 0 && i < counter; i++){
             prodCoeffs[i] = finalCoeffs[i];
             prodExpons[i] = finalExpons[i];
-         }
+        }
 
         return new Polynomial(prodCoeffs, prodExpons);
+        //return new Polynomial(finalCoeffs, finalExpons);
     }
 }
