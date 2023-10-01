@@ -81,45 +81,81 @@ public class Polynomial {
         }
     }
 
+    public boolean alreadyIn(int[] expons, int expon){
+        boolean isIn = false;
+        for(int i = 0; i < expons.length; i++){
+            if(expons[i] == expon){
+                isIn = true;
+                return isIn;
+            }
+        }
+        return isIn;
+    }
+
 
     public Polynomial add(Polynomial poly){//method updated for lab2
-        int longer = Math.max(coeffs.length, poly.coeffs.length);
-        int shorter = Math.min(coeffs.length, poly.coeffs.length);
-        double[] sumCoeffs = new double[longer];
-        int[] sumExpons = new int[longer];
+        //int longer = Math.max(coeffs.length, poly.coeffs.length);
+        //int shorter = Math.min(coeffs.length, poly.coeffs.length);
+        double[] sumCoeffs = new double[coeffs.length + poly.coeffs.length];
+        int[] sumExpons = new int[coeffs.length + poly.coeffs.length];
         int i;
 
         if(coeffs.length == 0 || expons.length == 0 || poly.coeffs.length == 0 || poly.expons.length == 0){
             return new Polynomial();//return empty polynomial if any of the fields are empty
         }
 
-        for (i = 0; i < shorter && expons[i] == poly.expons[i]; i++){
-            sumCoeffs[i] = coeffs[i] + poly.coeffs[i];
+        for(i = 0; i < coeffs.length; i++){//add all elements of coeffs and expons into sum arrays
+            sumCoeffs[i] = coeffs[i];
             sumExpons[i] = expons[i];
         }
-        for(int j = i; j < sumCoeffs.length; j++){
-            if(coeffs.length > poly.coeffs.length){
-                sumCoeffs[j] = coeffs[j];
-                sumExpons[j] = expons[j];
+        for(int j = 0; j < poly.coeffs.length; j++){//add all elements of poly.coeffs and poly.expons into sum arrays
+            sumCoeffs[i] = poly.coeffs[j];
+            sumExpons[i] = poly.expons[j];
+            i++;
+        }
+
+        //collect like terms
+        double[] fCoeffs = new double[sumCoeffs.length];
+        int[] fExpons = new int[sumCoeffs.length];
+        int curr = 0;
+
+        for(int k = 0; k < sumCoeffs.length; k++){
+            boolean srch = false;
+
+            for(int j = 0; j < curr; j++){
+                if(fExpons[j] == sumExpons[k]){//if matching expon is found, add the coeffs
+                    fCoeffs[j] += sumCoeffs[k];
+                    srch = true;
+                    break;
+                }
             }
-            else{
-                sumCoeffs[j] = poly.coeffs[j];
-                sumExpons[j] = poly.expons[j];
+            if(srch == false){//if no matches, add expon and coeff to respective arrays
+                fCoeffs[curr] = sumCoeffs[k];
+                fExpons[curr] = sumExpons[k];
+                curr++;
             }
         }
-        /**
-        for(int j = i; j < sumCoeffs.length; j++){
-            if (i < coeffs.length){
-                sumCoeffs[j] = coeffs[j];
-                sumExpons[j] = expons[j];
-            }
-            else{
-                sumCoeffs[j] = poly.coeffs[j];
-                sumExpons[j] = poly.expons[j];
+
+        //count number of nonzero coeffs to find needed length of addedCoeffs/Expons[]
+        int counter = 0;
+        for(int l = 0; l < fCoeffs.length; l++){
+            if(fCoeffs[l] != 0){
+                counter++;
             }
         }
-         */
-        return new Polynomial(sumCoeffs, sumExpons);
+
+        double[] addedCoeffs = new double[counter];
+        int[] addedExpons = new int[counter];
+        int z = 0;
+        for(int l = 0; l < fCoeffs.length; l++){
+            if(fCoeffs[l] != 0){
+                addedCoeffs[z] = fCoeffs[l];
+                addedExpons[z] = fExpons[l];
+                z++;
+            }
+        }
+
+        return new Polynomial(addedCoeffs, addedExpons);
     }
 
 
