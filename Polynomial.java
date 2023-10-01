@@ -27,21 +27,59 @@ public class Polynomial {
         }
     }
 
-    public Polynomial(File file){
+    public Polynomial(File polyFile){
         BufferedReader reader;
 
         try{
-            reader = new BufferedReader(new FileReader(polFile));
+            reader = new BufferedReader(new FileReader(polyFile));
             String line = reader.readLine();
-            int lineLength = line.length();
-            double[] coefficients = new double[lineLength];
-            int[] exponents = new int[lineLength];
-            boolean Negative = false, exp = false;
-            int i = 0, j = 0;
+            int lineLen = line.length();
+            double[] coefficients = new double[lineLen];
+            int[] exponents = new int[lineLen];
+            boolean neg = false, isExp = false;
+            int i = 0, j= 0;
+
+            for(char a: line.toCharArray()){
+                if(isExp == true){
+                    exponents[j] = Integer.parseInt(Character.toString(a));
+                    j++;
+                    isExp = false;
+                }
+                else if(a == 'x'){
+                    isExp = true;
+                }
+                else if(a == '-'){
+                    neg = true;
+                }
+                else if(a == '+'){
+                    continue;
+                }
+                else{
+                    double n = Double.parseDouble(Character.toString(a));
+                    if(neg == true){
+                        n = -1*n;
+                        neg = false;
+                    }
+                    coefficients[i] = n;
+                    i++;
+                }
+            }
+            coeffs = new double[i];
+            expons = new int[j + 1];
+            for(int k = 0; k < i; k++){
+                coeffs[k] = coefficients[k];
+            }
+            expons[0] = 0;
+            for(int l = 0; l < j; l++){
+                expons[l + 1] = exponents[l];
+            }
+            reader.close();
         }
 
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
-
 
 
     public Polynomial add(Polynomial poly){//method updated for lab2
@@ -157,5 +195,29 @@ public class Polynomial {
         }
 
         return new Polynomial(prodCoeffs, prodExpons);
+    }
+
+    public void saveToFile(String file){
+        FileWriter fwriter;
+
+        try{
+            fwriter = new FileWriter(file);
+
+            for(int i = 0; i < coeffs.length; i++){
+                if(i > 0 && coeffs[i] > 0){
+                    fwriter.write("+");
+                }
+                fwriter.write((int)coeffs[i] + "");
+                if(i > 0){
+                    fwriter.write("x");
+                    fwriter.write(expons[i] + "");
+                }
+            }
+            fwriter.write("\n");
+            fwriter.close();
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }

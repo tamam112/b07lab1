@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.io.File;
+import java.io.IOException;
 public class Driver {
     public static void main(String [] args) {
         Polynomial p = new Polynomial();
@@ -54,6 +56,12 @@ public class Driver {
         System.out.println("The Exponents for p3*p4 are: " + Arrays.toString(prodP3P4.expons));
         System.out.println("p3*p4 evaluated: " + prodP3P4.evaluate(2));
         */
+
+        File polyTest = new File("/Users/tamammakki/Desktop/b07lab1/polytest.txt");
+        Polynomial test = new Polynomial(polyTest);
+        System.out.println(test.evaluate(1));
+
+        p1.saveToFile("/Users/tamammakki/Desktop/b07lab1/test1.txt");
 
     }
 }
