@@ -1,5 +1,10 @@
 import java.lang.Math;
 import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Polynomial {
 
@@ -21,11 +26,23 @@ public class Polynomial {
             expons[i] = exps[i];
         }
     }
-/**
+
     public Polynomial(File file){
+        BufferedReader reader;
+
+        try{
+            reader = new BufferedReader(new FileReader(polFile));
+            String line = reader.readLine();
+            int lineLength = line.length();
+            double[] coefficients = new double[lineLength];
+            int[] exponents = new int[lineLength];
+            boolean Negative = false, exp = false;
+            int i = 0, j = 0;
+        }
 
     }
- */
+
+
 
     public Polynomial add(Polynomial poly){//method updated for lab2
         int longer = Math.max(coeffs.length, poly.coeffs.length);
@@ -34,12 +51,16 @@ public class Polynomial {
         int[] sumExpons = new int[longer];
         int i;
 
+        if(coeffs.length == 0 || expons.length == 0 || poly.coeffs.length == 0 || poly.expons.length == 0){
+            return new Polynomial();//return empty polynomial if any of the fields are empty
+        }
+
         for (i = 0; i < shorter && expons[i] == poly.expons[i]; i++){
             sumCoeffs[i] = coeffs[i] + poly.coeffs[i];
             sumExpons[i] = expons[i];
         }
-        for(int j = i; j < sumCoeffs.length; j++){//is this the same as the commented out code below?
-            if (coeffs.length > poly.coeffs.length){
+        for(int j = i; j < sumCoeffs.length; j++){
+            if(coeffs.length > poly.coeffs.length){
                 sumCoeffs[j] = coeffs[j];
                 sumExpons[j] = expons[j];
             }
@@ -48,8 +69,21 @@ public class Polynomial {
                 sumExpons[j] = poly.expons[j];
             }
         }
+        /**
+        for(int j = i; j < sumCoeffs.length; j++){
+            if (i < coeffs.length){
+                sumCoeffs[j] = coeffs[j];
+                sumExpons[j] = expons[j];
+            }
+            else{
+                sumCoeffs[j] = poly.coeffs[j];
+                sumExpons[j] = poly.expons[j];
+            }
+        }
+         */
         return new Polynomial(sumCoeffs, sumExpons);
     }
+
 
     public double evaluate(double x){//method updated for lab2
         //need to multiply each element in the array based on its exponent
@@ -68,6 +102,10 @@ public class Polynomial {
         double[] multiCoeffs = new double[poly.coeffs.length*coeffs.length];
         int[] multiExpons = new int[poly.coeffs.length*coeffs.length];
         int k = 0;//counts num of terms (expanded form), remaining values in arrays are filled by default double value
+
+        if(coeffs.length == 0 || expons.length == 0 || poly.coeffs.length == 0 || poly.expons.length == 0){
+            return new Polynomial();//return empty polynomial if any of the fields are empty
+        }
 
         for(int i = 0; i < coeffs.length; i++){//initial multiplication in expanded form
             for(int j = 0; j < poly.coeffs.length; j++){
@@ -119,6 +157,5 @@ public class Polynomial {
         }
 
         return new Polynomial(prodCoeffs, prodExpons);
-        //return new Polynomial(finalCoeffs, finalExpons);
     }
 }
