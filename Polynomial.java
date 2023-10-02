@@ -94,8 +94,6 @@ public class Polynomial {
 
 
     public Polynomial add(Polynomial poly){//method updated for lab2
-        //int longer = Math.max(coeffs.length, poly.coeffs.length);
-        //int shorter = Math.min(coeffs.length, poly.coeffs.length);
         double[] sumCoeffs = new double[coeffs.length + poly.coeffs.length];
         int[] sumExpons = new int[coeffs.length + poly.coeffs.length];
         int i;
@@ -220,7 +218,6 @@ public class Polynomial {
                 counter++;
             }
         }
-        //System.out.println("The value of counter:" + counter);
 
         //remove redundant exponents
         double[] prodCoeffs = new double[counter];
